@@ -16,31 +16,55 @@ ctx.fillRect(0, 0, can.width, can.height)
 // 忘れてしまったという話になってしまった．
 // 今いきなり webGL を作ったとしても一瞬で忘れてしまうかもしれん？？
 
-var ballX = 100
-var balldX = 5
-var ballY = 100
-var balldY = 0
-var ballddY = 2
-var ballRadius = 20
+
+var gravity = 2
+var balls = []
+
+function make_ball_arrs(){
+    for(let i = 0; i < 10; i++){
+        //balls.push({x: 20 + i*50, y: 100+25*i, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
+        balls.push({x: 20 + i*50, y: 100, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
+    }
+}
+
+make_ball_arrs()
 
 // 一瞬でボールを作れてしまった．．．天才かもしれない．．．
+// ボールを作った後何をしようかというのが問題なんだよなあ．．．ゲームでも作りたいんだが？？
+// ただ，いい感じのゲームのアイデアが思いつかないという悲しい話，いや模倣すればいいんだが．
+
+function move(){
+    for (const ball of balls) {
+        if(ball.x - ball.r < 0 || ball.x+ ball.r > CAN_WIDTH){
+            ball.vx *= -1
+            ball.vx 
+        }
+        ball.x += ball.vx
+
+        if(ball.y + ball.r > CAN_HEIGHT){
+            ball.vy *= -1
+            ball.y = CAN_HEIGHT-ball.r
+        }
+        ball.vy += gravity
+        ball.y += ball.vy
+    }
+}
+
+function draw(){
+    for (const ball of balls) {
+        ctx.beginPath()
+        ctx.arc(ball.x, ball.y, ball.r , 0, 2*Math.PI)
+        ctx.fillStyle = ball.color
+        ctx.fill()
+    }
+}
+
 function loop(){
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, can.width, can.height)
-    if(ballX - ballRadius < 0 || ballX+ ballRadius > CAN_WIDTH){
-        balldX *= -1
-    }
-    ballX += balldX
-    if(ballY + ballRadius > CAN_HEIGHT){
-        balldY *= -1
-        ballY = CAN_HEIGHT-ballRadius
-    }
-    balldY += ballddY
-    ballY += balldY
-    ctx.beginPath()
-    ctx.arc(ballX, ballY, ballRadius, 0, 2*Math.PI)
-    ctx.fillStyle = "red"
-    ctx.fill()
+    move()
+    draw()
+    console.log(balls)
     setTimeout(loop, 20);
 }
 
