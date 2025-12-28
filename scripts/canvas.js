@@ -20,14 +20,14 @@ ctx.fillRect(0, 0, can.width, can.height)
 var gravity = 2
 var balls = []
 
-function make_ball_arrs(){
-    for(let i = 0; i < 10; i++){
-        //balls.push({x: 20 + i*50, y: 100+25*i, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
-        balls.push({x: 20 + i*50, y: 100, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
-    }
-}
+// function make_ball_arrs(){
+//     for(let i = 0; i < 10; i++){
+//         //balls.push({x: 20 + i*50, y: 100+25*i, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
+//         balls.push({x: 20 + i*50, y: 100, vx: 5, vy:0, r:20, color: `hsl(${i*20}, 80%, 80%)`})
+//     }
+// }
 
-make_ball_arrs()
+// make_ball_arrs()
 
 // 一瞬でボールを作れてしまった．．．天才かもしれない．．．
 // ボールを作った後何をしようかというのが問題なんだよなあ．．．ゲームでも作りたいんだが？？
@@ -59,13 +59,21 @@ function draw(){
     }
 }
 
+var loop_cnt = 0
+var ball_cnt = 0
+var loop_interval = 20
 function loop(){
+    if(loop_cnt*loop_interval % 520 == 0){
+        balls.push({x: 20, y: 100, vx: 5, vy:0, r:20, color: `hsl(${ball_cnt*20}, 80%, 80%)`})
+        ball_cnt += 1
+    }
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, can.width, can.height)
     move()
     draw()
     console.log(balls)
-    setTimeout(loop, 20);
+    loop_cnt += 1
+    setTimeout(loop, loop_interval);
 }
 
 loop()
