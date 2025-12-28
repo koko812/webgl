@@ -5,12 +5,14 @@ const win = document.getElementById("win")
 win.style.height = `${WIN_HEIGHT}px`
 win.style.width = `${WIN_WIDTH}px`
 win.style.border = "1px solid #000"
-win.style.position = "relative"
-win.style.top = "0px"
-win.style.left = "0px"
+win.style.position = "absolute"
+win.style.top = "100px"
+win.style.left = "100px"
 win.style.perspectiveOrigin = "20% 20%"
 win.style.perspective = "500px"
 win.style.transformStyle = "preserve-3d"
+
+//absolute と relative の違いがわからない事件が発生してる
 
 function createRect(){
     var rect = document.createElement('div')
